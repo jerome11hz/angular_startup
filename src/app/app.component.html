@@ -1,14 +1,75 @@
 <div class="container-fluid">
-  <div class="col-md-offset-1">
-    <h1>
-      Welcome to !
-    </h1>
-  </div>
-  
-  <a routerLink="/users"> List Users</a>
-  <a style="margin-left:10px" routerLink="/add">Add User</a>
-  <br/>
-  <router-outlet></router-outlet>
-  </div>
-  
+    <div class="row">
+        <div class="col-md-4">
+            <h1>Par contents</h1>
+            <table class="table table-bordered">
+                <tr *ngFor="let parContent of parContents">
+                    <td>{{parContent.id}}</td>
+                    <td>{{parContent.name}}</td>
+                </tr>
+            </table>
 
+            <h1>Par Appraisors</h1>
+            <form #appraisorForm="ngForm">
+                <table class="table table-bordered">
+                    <tr *ngFor="let parAppraisor of parAppraisors">
+                        <td>{{parAppraisor.id}}</td>
+                        <td>{{parAppraisor.empId}}</td>
+                        <td>{{parAppraisor.empName}}</td>
+                        <td><input type="checkbox" [name]="parAppraisor.id" [(ngModel)]="parAppraisor.isActive" /></td>
+                    </tr>
+                </table>
+            </form>
+            <pre>
+            {{appraisorForm.value | json}}
+            </pre>
+        </div>
+
+        <div class="col-md-4">
+            <h1>Par content Score</h1>
+            <form #parScoreForm="ngForm">
+
+                <table class="table table-bordered">
+                    <tr *ngFor="let parContent of parContents">
+                        <ng-container *ngIf="parContent.isactive">
+                            <td>{{parContent.id}}</td>
+                            <td>{{parContent.name}}</td>
+                            <td><input type="number" [name]="parContent.id" [(ngModel)]="parContent.score" /></td>
+                        </ng-container>
+                    </tr>
+                </table>
+                <button (click)="callScore()">call score</button>
+                <pre>
+                    {{parScoreForm.value | json}}
+            </pre>
+
+                <pre>
+                    {{parReport | json}}
+            </pre>
+            </form>
+        </div>
+
+        <div class="col-md-4">
+            <h1>Par content Schedule</h1>
+            <form #parSheduleForm="ngForm">
+                <button (click)="selectAll()">Select All</button>
+                <button (click)="deselectAll()">De Select All</button>
+
+                <table class="table table-bordered">
+                    <tr *ngFor="let parContent of parContents">
+                        <td>{{parContent.id}}</td>
+                        <td>{{parContent.name}}</td>
+                        <td><input type="checkbox" [name]="parContent.id" [(ngModel)]="parContent.isactive" /></td>
+                    </tr>
+                </table>
+                <pre>
+                    {{parSheduleForm.value | json}}
+            </pre>
+                <pre>
+                    {{parObj | json}}
+            </pre>
+            </form>
+            <button (click)="callLoop()">Click</button>
+        </div>
+    </div>
+</div>
